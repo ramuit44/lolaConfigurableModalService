@@ -1,0 +1,36 @@
+<div class="facility-detail col-xs-12">
+	<div>{{vm.modalData.productDto.facility || '-'}}
+	</div>
+	<div class="acc-no">Acc No. {{vm.modalData.productDto.account.bsb || '-'}}-{{vm.modalData.productDto.account.accountNumber || '-'}}
+	</div>
+	<div class="col-xs-12 facility-grid text-right">
+			<div class="col-xs-6">
+				<div class="col-xs-3 text-left">
+					<span class="col-xs-12">{{vm.viewData.maturingOnLabel}}</span>
+					<span class="col-xs-12">{{(vm.modalData.productDto.maturityDate | date:"dd/MM/yyyy")||'-'}}</span>
+				</div>
+				<div class="col-xs-5 ">
+					<span class="col-xs-12">Repayment Amount</span>
+					<span class="col-xs-12">{{(vm.modalData.productDto.repaymentAmount|customCurrency)||'-'}}</span>
+				</div>
+				<div class="col-xs-4">
+					<span class="col-xs-12">Effective Rate</span>
+					<span class="col-xs-12">{{vm.modalData.productDto.rate? vm.modalData.productDto.rate+'%' :'-'}}</span>
+				</div>
+			</div>
+			<div class="col-xs-2 text-left">
+				<span class="col-xs-12">Existing Term</span>
+				<span class="col-xs-12">{{vm.modalData.productDto.termYears}}	yrs {{vm.modalData.productDto.termMonths}} mths</span>
+			</div>
+			<div class="col-xs-2">
+				<span class="col-xs-12">Existing Limit</span>
+				<span class="col-xs-12">{{(vm.modalData.productDto.limit|customCurrency)||'-'}}</span>
+			</div>
+			<div class="col-xs-2">
+				<span class="col-xs-12">Balance</span>
+				<span class="col-xs-12">{{(vm.modalData.productDto.balance|customCurrency)||'-'}}</span>
+			</div>
+	</div>
+</div>
+
+	

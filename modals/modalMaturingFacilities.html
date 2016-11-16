@@ -1,0 +1,39 @@
+<div >
+	<div class="modal-header launchpad-modal-header">
+		<h3 class="modal-title pull-left launchpad-modal-title">Maturing Facilities</h3>
+		<button type="button" class="close launchpad-modal-close"  ng-click="closeMaturingFacilitiesPopup()" >
+            <span aria-hidden="true">&times;</span>
+        </button>
+	</div>
+
+	<div class="modal-body launchpad-modal-body">
+		<div class="maturing-connection-name">{{modalConnection.groupName}}</div>
+		<div class="maturing-table">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="col-xs-6">Faciltiy</th>
+						<th class="col-xs-3">Exisiting Limit</th>
+						<th class="col-xs-3">Expiry & Term</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="link"ng-repeat="facility in maturingFacilties" ng-click="ok()">
+						<td class="col-xs-6 ">
+							<span>{{getBsbAndAccountNo(facility)}}</span><br>
+							<span class="maturing-facility-name">{{facility.productDescription}}</span>
+						</td>
+						<td class="col-xs-3 launchpad-connections-table-row-align">{{facility.formattedAmount}}</td>
+						<td class="col-xs-3 launchpad-connections-table-row-align">{{facility.maturityDate}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+
+	<!-- <div class="modal-footer">
+		<button class="button-primary" ng-click="ok()">OK</button>
+		<button class="btn btn-warning" ng-click="cancel()">Cancel</button> 
+	</div> -->
+</div>

@@ -1,0 +1,78 @@
+<div id="creditCheckResponsePopUp">
+    <div class="col-xs-12">
+        <div class="col-sm-1 no-horizontal-padding">
+            <span class="pull-left decision-icon" 
+            ng-class="{ 'decision-icon-refer-to-credit':(vm.modalData.modalType === 'CreditCheckNoDecision' || vm.modalData.modalType === 'BureauCheckNoDecision'),
+                        'decision-icon-unconditionally-approved' : (vm.modalData.modalType === 'CreditCheckUnconditionallyApproved'),
+                        'decision-icon-conditionally-approved' : (vm.modalData.modalType === 'CreditCheckOutage' || vm.modalData.modalType === 'CreditCheckBussinessAsset' || vm.modalData.modalType === 'CreditCheckValuationPolicy')}">
+            </span>
+        </div>
+        <div ng-switch="vm.modalData.modalType" class="col-xs-11">
+            <h3>{{vm.modalData.header}}</h3>
+            <div ng-switch-when="CreditCheckNoDecision">
+                <p>
+                    Adverse findings on Credit Check. View <a class="lola-link" ng-click="vm.modalData.generateCreditCheckResultPDF()">findings</a> on Credit Check. 
+                </p>
+                <p>
+                    Return to the deal to provide Financials and mitigating comments. 
+                </p>
+                <p>
+                    Deal will refer to Credit.
+                </p>
+            </div>
+            <div ng-switch-when="BureauCallException" class="bureauCallException">
+                <div class="col-xs-12">
+                     <div class="col-xs-1 lolaErrorIcon"></div>
+                     <div class="col-xs-11 content">
+                         <div class="col-xs-12 header">
+                             <p>
+                                <b>Something went wrong!</b> 
+                            </p>
+                        </div>
+                        <div class="col-xs-12">Please try again later or refer to the <a class="inline-small-link" href="http://cms.intranet.westpac.com.au/content/CORP/MACMultiBr.nsf/Pages/LOLAErrors"
+                        target="_blank">LOLA error guide</a> for further instructions.</div>
+                        <div class="col-xs-12">&nbsp;</div>
+                        <div class="col-xs-12">
+                             <p>
+                                <b>Error code</b>
+                            </p>
+                        </div>
+                        <div class="col-xs-12">{{vm.modalData.errorCode}} - {{vm.modalData.errorMessage}}</div>
+                    </div>
+                </div>
+            </div>
+            <div ng-switch-when="BureauCheckNoDecision">
+                <p>
+                    Adverse findings on Bureau Check. View <a class="lola-link" ng-click="vm.modalData.generateCreditCheckResultPDF()">findings</a> on Bureau Check. 
+                </p>
+                <p>
+                    Return to the deal to provide Financials and mitigating comments. 
+                </p>
+                <p>
+                    Deal will refer to Credit.
+                </p>
+            </div>
+            <p ng-switch-when="CreditCheckOutage">
+                Credit Check is unavailable and will be performed when the deal is submitted to TLA.
+                </br></br>
+                Continue to Finalise Deal.
+            </p>
+            <p ng-switch-when="CreditCheckBussinessAsset">
+            	Deal is conditionally Approved, subject to credit review of business assets.
+                </br></br>
+                Continue to Finalise Deal.
+            </p>
+            <p ng-switch-when="CreditCheckValuationPolicy">
+            	Deal is conditionally Approved, subject to updated valuation.
+                </br></br>
+                Continue to Finalise Deal.
+            </p>
+            <p ng-switch-default>
+                Deal is Unconditionally Approved. Continue to Finalise Deal.
+            </p>
+        </div>
+    </div>   
+    <div class="col-xs-12"> 
+        <button class="btn btn-primary" ng-click="vm.modalData.modalCallback();modalOptions.close()">{{vm.modalData.buttonText}}</button>                      
+    </div>
+</div>

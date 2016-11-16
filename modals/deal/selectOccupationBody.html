@@ -1,0 +1,56 @@
+<div class="col-sm-12">
+		<h4>Customer: {{vm.parentScope.occGender}} {{vm.parentScope.occCustomerFirstName}} {{vm.parentScope.occCustomerLastName}}</h4>
+</div>
+<div class="col-sm-12">
+	<p></p><p></p><p></p>
+</div>
+<div class="col-sm-12">
+	<h4>Search criteria</h4>
+</div>
+<div class="col-sm-12">
+	<p></p><p></p><p></p>
+</div>				
+<div class="col-sm-12">
+	<label for="new-limit">OCCUPATION</label>
+</div>
+<div class="col-sm-12">
+	<input type="text" placeholder="Enter occupation..."
+		ng-model="vm.parentScope.occupation" name="occupation"  class="form-control input-lg no-border">
+</div>				
+<div class="col-sm-12 top_padding">
+	<button class="btn btn-primary pull-right" ng-disabled="!(vm.parentScope.occupation)" ng-Click="vm.parentScope.occSearchFuntion()">SEARCH</button>
+</div>
+<div class="col-sm-12">
+		<h4>Search results</h4>
+</div>
+<div class="col-sm-12">
+	<p></p><p></p><p></p>
+</div>		
+<div class="col-sm-12">
+	<table class="table table-home-page table-hover table-fixed" ng-table="vm.parentScope.tableParams">
+		<thead>
+			<tr>
+				<th class='col-sm-12'>OCCUPATION</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="occupationData in $data">
+				<td>
+					<label class="custom-radio">
+						<span class="radio">
+							<input name="selectedOccupation" ng-model="vm.parentScope.setOccupationId" ng-value="occupationData.occupationId" ng-change="vm.parentScope.getSelectedOccupationData(occupationData)"  type="radio"/>
+							<span>&nbsp;</span>
+						</span>
+						&nbsp;{{occupationData.occupation}}
+					</label>								 
+				</td>
+			</tr>
+		</tbody>
+		<tbody>
+			<tr ng-show="vm.parentScope.occupationValue==true">
+				<td colspan="6">No results found.</td>
+			</tr>						
+		</tbody>
+	</table>
+</div>
+				

@@ -1,0 +1,53 @@
+<div >
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="close()">
+			<span aria-hidden="true" class="glyphicon glyphicon-remove"></span><span class="sr-only">Close</span>
+		</button>
+		<h3 class="modal-title" id="myModalLabel">{{heading}}</h3>
+	</div>
+					
+	<div class="modal-body modal-body-popup">
+		<p class="text-heading">Deal: {{lolaDealId}} (Connection: {{customerGroupName}})</p>
+		<div>&nbsp;</div>
+		<table class='col-sm-12 row'>
+			<thead>
+				<tr>
+					<th class='col-sm-2 text-heading icon_purple text-bold'>TLA DEAL ID</th>
+					<th class='col-sm-2 text-heading icon_purple text-bold'>TLA STATUS</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class='col-sm-2'><span ng-show="tlaDealId!='null'">{{tlaDealId}}</span></td>
+					<td class='col-sm-2'>{{tlaDealStatus}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><br><br><br></p>
+		<table class="table table-home-page table-hover" ng-show='valErrorList.length>0'>
+			<thead>
+				<tr>
+					<th class='col-sm-3'>Error Code</th>
+					<th class='col-sm-9'>Error</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="error in valErrorList">
+					<td class='col-sm-2'>{{error.errorCode}}</td>
+					<td class='col-sm-10' ng-bind-html="error.description | parseUrl"></td>
+				</tr>
+			</tbody>
+		</table>
+					
+		<div class='col-xs-12' align="left">
+			<a href="http://cms.intranet.westpac.com.au/content/CORP/MACMultiBr.nsf/Pages/LOLAErrors" target="_blank">Click here for more information on TLA status and errors</a>
+		</div>
+	</div>
+	
+	<div class="modal-footer">
+		<div class='col-xs-12 pull-right'>
+			<button ng-show='enableRetry' type="button"  restrict='' viewAccess='ViewRetryButton' editAccess='ViewRetryButton' class="btn btn-primary" data-dismiss="modal" ng-Click='updateDealStatusOnRetry(unSuccessFulDealId,errorList,dealsourceGroupNo)'>RETRY</button>
+			<button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+		</div>
+	</div>
+</div>

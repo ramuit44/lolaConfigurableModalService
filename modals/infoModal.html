@@ -1,0 +1,19 @@
+<div>
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="infoModalCtrl.close()">
+			<span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+			<span class="sr-only">Close</span>
+		</button>
+	
+		<h3 class="modal-title" id="myModalLabel"><b>{{infoModalCtrl.header}}</b></h3>
+	</div>
+			
+	<div class="modal-body modal-body-popup col-xs-12">
+		<p>{{infoModalCtrl.infoMsg}}</p>
+	</div>
+			
+	<div class="modal-footer">
+			<button type="button" class="btn btn-default pull-right" ng-click="infoModalCtrl.action()">{{infoModalCtrl.buttonLabel}}</button>		
+	</div>
+
+</div>

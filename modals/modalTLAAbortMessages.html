@@ -1,0 +1,63 @@
+<div style="overflow:auto;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"  ng-click="modalCtrl.close()">
+			<span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+			<span class="sr-only">Close</span>
+		</button>
+		<h3 class="modal-title" id="myModalLabel">{{modalCtrl.heading}}</h3>
+	</div>
+			
+	<div class="modal-body modal-body-popup">
+		<div class='col-sm-12' >
+			<p ng-show='!modalCtrl.isTLAabortErrorExists'>The following Customer information is missing from this Connection and may cause TLA aborts if you submit your Deal.</p>
+			<p ng-show='modalCtrl.isTLAabortErrorExists'>The following Customer information is missing from this Connection. You will need to resolve the errors, as indicated below, before you can Start a Deal in LOLA.</p>
+			<br>
+			<p ng-show='!modalCtrl.isTLAabortErrorExists'>You can either fix these now, or continue with the Deal and resolve the missing information once it has been submitted to TLA.</p>
+			<br ng-if='!modalCtrl.isTLAabortErrorExists'>
+			<p>An ESR Cleanse is not required to resolve the items below. For further assistance, contact the TLA/TLW Support Team on 1800 062 704, options 1 then 5.</p>
+			<br>
+			<h2 ng-show='modalCtrl.isTLAabortErrorExists'>TLA Aborts</h2>
+			<h2 ng-show='!modalCtrl.isTLAabortErrorExists'>Potential TLA Aborts</h2>
+			<table class="table table-history table-action table-hover table-fixed" ng-table="modalCtrl.tableParams3" >
+				<thead>
+					<tr>
+						<!-- <th class='col-sm-1'>&nbsp;</th> -->
+						<th>&nbsp</th>	
+						<th class='col-xs-1'>ID</th>
+						<th>DESCRIPTION</th>
+						<th ng-show='modalCtrl.isTLAabortErrorExists'>MUST BE RESOLVED BEFORE STARTING A DEAL</th>
+						<th>WHO / WHAT</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr ng-repeat="errorMsg	in $data | orderBy:'type'">
+						<td>&nbsp;</td>
+						<td class='col-xs-1'>{{errorMsg.code}}</td>
+						<td>{{errorMsg.message}}</td>
+						<td ng-show='modalCtrl.isTLAabortErrorExists' class='text-center'>{{modalCtrl.checkIsError(errorMsg.type)}}</td>
+						<td>{{errorMsg.resource}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- <a href="http://cms.intranet.westpac.com.au/content/CORP/MACMultiBr.nsf/Pages/LOLAAborts" target="_blank">Click here for more information on Connection Health Check errors</a> -->
+		</div>
+	</div>			
+			
+	<div class="modal-footer">
+		<div ng-show='modalCtrl.isTLAabortErrorExists'>
+			<div class='pull-right'>
+				<button type="button" class="btn btn-default pull-left" ng-Click="modalCtrl.printTLAErrors()">PRINT</button>
+				<button type="button" class="btn btn-default pull-left" ng-Click="modalCtrl.close()">OK</button>
+			</div>
+		</div>
+
+		<div ng-show='!modalCtrl.isTLAabortErrorExists'>
+			<div class='pull-right'>
+				<button type="button" class="btn btn-default pull-left" ng-Click="modalCtrl.printTLAErrors()">PRINT</button>
+				<button type="button" class="btn btn-default pull-left" ng-click="modalCtrl.close()">CANCEL</button>
+				<button type="button" class="btn btn-default pull-left" ng-Click='modalCtrl.startDeal()'>START THE DEAL</button>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,41 @@
+<div ng-include="'app/views/modals/connectionProfile/facilityDetail.html'"></div>
+<div class="col-xs-12 tla-response">
+	<span class="col-xs-12">Status of your Deal in TLA</span>
+	<div class="col-xs-12" ng-if="!vm.modalData.isTLASubmitSuccess">
+		<div class="col-xs-12">
+			<div class="col-xs-2"><span class="col-xs-12">Error Code</span></div>
+			<div class="col-xs-10"><span class="col-xs-12">Error</span></div>
+		</div>
+		<div class="col-xs-12" ng-repeat="error in vm.modalData.errors">
+			<div class="col-xs-2 text-right"><span class="col-xs-12">{{error.code}}</span></div>
+			<div class="col-xs-10"><span class="col-xs-12">{{error.message}}</span></div>
+		</div>
+		<a ng-if="!vm.showErrorDescription" href="http://cms.intranet.westpac.com.au/content/CORP/MACMultiBr.nsf/Pages/LOLAErrors" target="_blank">Click here for more information on TLA status and errors</a>
+	</div>
+	<div class="col-xs-12" ng-if="vm.showErrorDescription && !vm.modalData.isTLASubmitSuccess">
+		<div class="col-xs-12" >
+			<div class="col-xs-12">
+				<span class="col-xs-12">What you need to do.</span>
+			</div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-12"><span class="col-xs-12">Progress the active deal in TLA past decision or withdraw it.</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-12"><span class="col-xs-12">Do you want to resubmit the deal now?</span></div>
+		</div>
+	</div>
+	<div class="col-xs-12" ng-if="vm.modalData.isTLASubmitSuccess">
+		<span class="col-xs-12">Your extension for the above maturing facility has been submitted to TLA.</span>
+	</div>
+	<div class="modal-footer col-xs-12">
+		<div class="col-xs-12 button-container">
+			<button type="button" class="btn btn-primary text-center" ng-if="vm.showErrorDescription && !vm.modalData.isTLASubmitSuccess" ng-click="vm.retry()">Retry</button>
+			<button type="button" class="btn btn-primary text-center" ng-click="vm.close()">View Dashboard</button>
+		</div>
+		</br>
+		<div class="col-xs-12">
+			<a class="lola-link" href="" ng-click="vm.close()" target="_blank">Cancel</a>
+		</div>
+	</div>
+</div>

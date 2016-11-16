@@ -1,0 +1,85 @@
+<div>
+	<div class="modal-header esr-modalHeader">
+		<div class="col-xs-12 connection-profile-header">
+			<div class="col-xs-11">
+				<span class="modal-title" id="myModalLabel">{{heading}}</span>
+			</div>
+			<div class="col-xs-1">
+				<button type="button" class="close" data-dismiss="modal" ng-click="close()">
+					<span aria-hidden="true" class="connection-profile-close header-adjustment"></span><span class="sr-only">Close</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="col-xs-12">
+		<!-- <div class="esr-heading">This Connection has the following ESR Errors:</div> -->
+		<div class="esr-heading">This connection requires an ESR cleanse for the following reasons:</div>
+		</div>	
+	<div class="modal-body modal-body-popup col-xs-12" >
+	<div class="" style="background-color:#eeeeee">
+	<table class="table esrTable" ng-table="ESRtableParams" template-pagination="app/views/templates/lolaErrorPaginationTemplate.html">
+	<tbody>
+		<tr ng-repeat="error in $data">
+		<td>
+		<ul class="esrTable-list esr-description">		
+			<li><span ng-bind-html="error.message | unsafe"></span> 
+				<ol>
+	                <li ng-repeat="errorDesc in error.invalidList">
+	                	<div ng-if="error.code == errorCodes.VALIDATION_ERROR_CODE_BILLING_SCHEDULE_IS_MISSING 
+	                	|| error.code == errorCodes.VALIDATION_ERROR_CODE_PRODUCT_SECURITY_REQUIRED_MISSING">
+		                	<div ng-bind-html="errorDesc.borrower.accountOwnerName | unsafe"></div>
+		                	<div><span ng-bind-html="errorDesc.productCategroy.productTypeName | unsafe"></span>
+		                	<span ng-if="errorDesc.productCategroy.productTypeName">-</span>		                	
+		                	<span ng-bind-html="errorDesc.productAccount.bsb | unsafe"></span>
+							<span>&nbsp;</span>
+							<span ng-bind-html="errorDesc.productAccount.accountNumber | unsafe"></span></div>
+						</div>
+						
+						
+						<div ng-if="error.code == errorCodes.VALIDATION_ERROR_CODE_ACCT_OWNER_CUSTOMER_NOT_AVAIL">	
+						 <div  ng-bind-html="errorDesc.accountOwnerName"></div>
+						</div>
+						
+						<div ng-if="error.code == errorCodes.VALIDATION_ERROR_CODE_GUARANTOR_NOT_AVAIL 
+						|| error.code == errorCodes.VALIDATION_ERROR_CODE_GUARANTEE_TYPE_MISSING">	
+							<div  ng-bind-html="errorDesc.accountOwnerName | unsafe"></div>
+							<div><span ng-bind-html="errorDesc.guaranteeTypeName | unsafe"></span></div>
+						</div>
+						
+						<div ng-if="error.code == errorCodes.VALIDATION_ERROR_CODE_ASSET_OWNER_NOT_AVAIL 
+						|| error.code == errorCodes.VALIDATION_ERROR_CODE_ASSET_OWNER_INCORRECT 
+						|| error.code == errorCodes.VALIDATION_ERROR_CODE_ASSET_OWNERSHIP_PERCENTAGE_NOT_EQUAL_TO_100 
+						|| error.code == errorCodes.VALIDATION_ERROR_CODE_ASSET_VALUATION_DETAILS_MISSING">
+							<span ng-bind-html="errorDesc.briefDescription | unsafe"></span> 
+						</div>
+	                </li>                
+	            </ol>	           
+			</li>
+		</ul>
+		</td></tr>
+		<tr><td>
+	 	<div ng-if="TLAErrorList[0].subMessage != null" ng-repeat="error in TLAErrorList" ng-bind-html="error.subMessage | unsafe"></div> 
+		</td></tr>
+		</tbody>
+		</table>
+		</div>
+		<div ng-show = "ESRMailError">
+		<p></p>
+		<p class="red-color">{{ESRMailErrorMsg}}</p>
+		</div>
+	</div>
+			
+	<div class="modal-footer">
+			
+		<div class="col-xs-12">
+		<a ng-hide = "ESRMailError" ng-click="sendEmail()"  target="_blank"><button type="button" class="btn btn-primary"><b>Order ESR Cleanse</b></button></a>
+		<a ng-show = "ESRMailError" href="http://prccap11.intranet.westpac.com.au/E_DIR/ESRCleanse.nsf/Document?OpenForm"  target="_blank"><button type="button" class="btn btn-primary">ORDER ESR CLEANSE BY E-FORM</button></a>
+		</div>
+		<div class="col-xs-12">&nbsp;</div>
+		<div class="col-xs-12">	<a class="lola-link esr-description" href="" ng-click="close()" target="_blank">Cancel</a></div>
+	
+	</div>
+
+</div>

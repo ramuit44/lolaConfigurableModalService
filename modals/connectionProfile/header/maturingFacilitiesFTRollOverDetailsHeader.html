@@ -1,0 +1,24 @@
+<div class="extend-facility-header col-xs-12">
+	<div class="col-xs-4 modal-title">
+		<span class="col-xs-12">Extend a Facility</span>
+		<span class="col-xs-12 modal-sub-title">Deal #{{vm.modalData.productDto.dealId}}</span>
+	</div>
+	<div id= "mfDealDecisionDiv" class="col-xs-4 col-xs-offset-3 decision-status" data-target=".info_popup" data-content="{{vm.decisionReasons}}" data-html="true" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-original-title="" title="">
+		<div class="col-xs-2">
+            <span class="pull-left decision-icon decision-icon-{{vm.decision.decisionStatusId}}"></span>
+        </div>
+		<div class="col-xs-10">
+			<div>
+				<p class="deal-heading ng-binding">{{vm.decision.decisionStatus}}</p>
+				<p class="ng-binding">{{vm.decision.decisionSubStatus}}</p>	
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-1">
+		<button type="button" class="close  col-xs-5 col-xs-offset-7" data-dismiss="modal" ng-click="vm.close()">
+			<span aria-hidden="true"
+				class="close header-adjustment"></span><span
+				class="sr-only">Close</span>
+		</button>
+	</div>
+</div>

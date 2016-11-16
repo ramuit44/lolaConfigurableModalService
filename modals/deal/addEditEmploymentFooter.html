@@ -1,0 +1,6 @@
+<div class="col-sm-6">
+	<button class="btn btn-default pull-left" ng-click="modalOptions.close()">CANCEL</button>
+</div>
+<div class="col-sm-6">
+	<button class="btn btn-primary pull-right" ng-disabled="!vm.parentScope.isEnableEmploymentDetailsSave(vm.parentScope.startDateInProfession,vm.parentScope.startDate,vm.parentScope.endDate,vm.parentScope.employerPhoneNumber)" ng-Click="vm.parentScope.setEmploymentDetails();$close();">OK</button>
+</div>	

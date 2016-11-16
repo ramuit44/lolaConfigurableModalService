@@ -1,0 +1,189 @@
+<div ng-include="'app/views/modals/connectionProfile/facilityDetail.html'">
+</div>
+<form name="vm.mfform" class="col-xs-12 facility-rates-schedules">
+    <fieldset ng-disabled="vm.isOpenModalInViewMode">
+        <div class="facility-rates-schedules col-xs-12">
+            <div class="col-xs-12">
+                <div class="title">Rates</div>
+                <div class="col-xs-12 content">
+                    <div class="col-xs-12">
+                        <div class="col-xs-3">
+                            <div class="col-xs-12">Base Type</div>
+                            <div class="col-xs-12">
+                                <select class="select-label" disabled ng-options="baseRateType.key as baseRateType.name for baseRateType in vm.baseRateTypeList | orderBy:'key'" ng-model="vm.modalData.productDto.interestRate.baseRateTypeId" ng-change='vm.makeFormDirty()'>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div>Base Rate</div>
+                            <named-input model="vm.modalData.productDto.interestRate.baseRate" input-width=9 label-text="%" is-view-mode="true" input-attributes="repayment-formatter=3" ng-input-change='vm.makeFormDirty()'></named-input>
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="col-xs-12">Risk Margin</div>
+                            <named-input model="vm.modalData.productDto.interestRate.customerRiskMargin" input-width=9 label-text="%" is-valid="vm.isValidMargin" default-value=0 input-attributes="lola-decimals=3" is-view-mode="vm.isOpenModalInViewMode" error-message="Enter a numerical value > 0% and <= 100%" ng-input-change='vm.makeFormDirty()'></named-input>
+                        </div>
+                        <div class="col-xs-3" ng-if="vm.viewRules.isBusinessLoanMarginInRates">
+                            <div class="col-xs-12">Business Loan Margin</div>
+                            <named-input model="vm.modalData.productDto.interestRate.businessLoanMargin" input-width=9 label-text="%" is-valid="vm.isValidMargin" default-value=0 input-attributes="lola-decimals=3" ng-input-change='vm.makeFormDirty()' is-view-mode="vm.isOpenModalInViewMode" error-message="Enter a numerical value > 0% and <= 100%"></named-input>
+                        </div>
+                        <div class="col-xs-3" ng-if="vm.viewRules.isTermPremiumInRates">
+                            <div class="col-xs-12">Term Premium Margin</div>
+                            <named-input model="vm.modalData.productDto.interestRate.termPremiumMargin" input-width=9 label-text="%" is-valid="vm.isValidMargin" default-value=0 input-attributes="lola-decimals=3" ng-input-change='vm.makeFormDirty()' is-view-mode="vm.isOpenModalInViewMode" error-message="Enter a numerical value > 0% and <= 100%"></named-input>
+                        </div>
+                        <div class="col-xs-3" ng-if="vm.viewRules.isProductMarginInRates">
+                            <div class="col-xs-12">Product Margin</div>
+                            <named-input model="vm.modalData.productDto.interestRate.productMargin" input-width=9 label-text="%" is-valid="vm.isValidMargin" default-value=0 input-attributes="lola-decimals=3" ng-input-change='vm.makeFormDirty()' is-view-mode="vm.isOpenModalInViewMode" error-message="Enter a numerical value > 0% and <= 100%"></named-input>
+                        </div>
+                        <div class="col-xs-3" ng-if="vm.viewRules.isBusinessOneMarginInRates">
+                            <div class="col-xs-12">Business One Margin</div>
+                            <named-input model="vm.modalData.productDto.interestRate.businessOneMargin" input-width=9 label-text="%" is-valid="vm.isValidMargin" default-value=0 input-attributes="lola-decimals=3" ng-input-change='vm.makeFormDirty()' is-view-mode="vm.isOpenModalInViewMode" error-message="Enter a numerical value > 0% and <= 100%"></named-input>
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="col-xs-2">
+                            <div>Shading</div>
+                            <named-input model="vm.modalData.productDto.interestRate.shading" is-view-mode="vm.isOpenModalInViewMode" input-width=9 label-text="%" is-valid="vm.isValidShading" default-value=0 input-attributes="lola-decimals=3" ng-input-change='vm.makeFormDirty()'></named-input>
+                        </div>
+                        <div class="col-xs-4">
+                            <div>Shading Authorized By</div>
+                            <input type="text" ng-model="vm.modalData.productDto.interestRate.authorisedBy" placeholder="{{(vm.modalData.productDto.interestRate.shading <= 0 )?'N/A':''}}" ng-disabled="vm.isOpenModalInViewMode || vm.modalData.productDto.interestRate.shading <= 0" ng-change=vm.makeFormDirty() />
+                        </div>
+						<div class="error-text col-xs-12" ng-hide="vm.isValidShading()" >Enter a Shading value => 0.00% or <= Resultant Rate.</div>
+                        </div>
+                        <div class="col-xs-12 facility-result">
+                            <div class="col-xs-3">
+                                <span class="col-xs-12">Resultant Rate</span>
+                                <span class="col-xs-12">{{vm.getResultantRate()}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="title">
+                        Repayment Schedule
+                        <i class="glyphicon glyphicon-info-sign info-link" data-target=".info_popup" data-content="Enter the term that is not greater than 5 years. Repayment calculations are indicative only. The calculator does not take into account all fees and charges that may be applied." data-html="true" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-original-title="" title=""></i>
+                    </div>
+                    <div class="col-xs-12 content">
+                        <div class="col-xs-12">
+                            <div class="col-xs-3 facility-term">
+                                <div class="col-xs-12">Term</div>
+                                <div class="col-xs-12">
+                                    <!--<form name="mfTermForm" class="form-inline">	-->
+                                    <div class="col-xs-6">
+                                        <named-input model="vm.modalData.productDto.repaymentList[0].termYears" is-view-mode="vm.isOpenModalInViewMode" input-width=6 label-text="yrs" input-attributes="placeholder=0;numbers-only=true;name=years" ng-input-change='vm.makeFormDirty()' columns="11"></named-input>
+                                    </div>
+                                     <div class="col-xs-6">
+                                        <named-input model="vm.modalData.productDto.repaymentList[0].termMonths" is-view-mode="vm.isOpenModalInViewMode" input-width=6 label-text="mths" input-attributes="placeholder=0;numbers-only=true;name=months" ng-input-change='vm.makeFormDirty()' columns="12"></named-input>
+                                    </div>
+                                                                
+                                    <!--</form> -->
+                                </div>
+                            </div>
+                            <div class="col-xs-1 term-or-expiry">
+                                <span></span>
+                                <div  class="col-xs-1 bold purple">OR</div>
+                            </div>
+                            <div class="col-xs-2 facility-term">
+                                <div class="col-xs-12">Expiry</div>
+                                <div class="col-xs-12">
+                                   <div class="col-xs-12">
+                                        <div class="form-group col-xs-12">
+                                            <div class="input-group col-xs-12" lola-datetimepicker ng-model="vm.modalData.productDto.repaymentList[0].paymentEndDate" options="vm.options" on-click="vm.onMFDateWidgetClick()" bind-year-model="vm.modalData.productDto.repaymentList[0].termYears" bind-month-model="vm.modalData.productDto.repaymentList[0].termMonths" compare-with-date-model="vm.modalData.productDto.maturityDate" on-hide="vm.makeFormDirty()">
+                                                <input type="text" ng-class="{'group-element': !vm.isOpenModalInViewMode }" placeholder="Pick a Date.." onkeydown="return false"/>
+                                                <span class="input-group-addon group-icon-element" ng-hide="vm.isOpenModalInViewMode">
+						                            						<span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="col-xs-12">Reduction Basis</div>
+                                <div class="col-xs-12">
+                                    <select class="select-label" disabled ng-options="reductionBasis.key as reductionBasis.name for reductionBasis in (vm.reductionBasisList | filter: { parent: (vm.modalData.productDto.productCategory.productTypeId)}: true)" ng-model="vm.modalData.productDto.repaymentList[0].repaymentTypeId" ng-change='vm.makeFormDirty()'>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="col-xs-12">Reduction Type</div>
+                                <div class="col-xs-12">
+                                    <select class="select-label" disabled ng-options="reductionType.key as reductionType.name for reductionType in (vm.reductionTypeList)" ng-model="vm.modalData.productDto.repaymentList[0].frequencyId" ng-change='vm.makeFormDirty()'>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="error-text col-xs-12" ng-if="(!vm.isValidMFTermYear(vm.modalData.productDto.repaymentList[0].termYears,vm.modalData.productDto.repaymentList[0].termMonths))">Term cannot exceed 5 years.</div>
+                        <div class="error-text col-xs-12" ng-if="(!vm.isValidMFTermMonth(vm.modalData.productDto.repaymentList[0].termMonths))">Term Months cannot exceed 11 months.</div>
+                        <div class="col-xs-12 facility-result">
+                            <div class="col-xs-3">
+                                <span class="col-xs-12">Maturing Date</span>
+                                <span class="col-xs-12 facility-result-span">{{( vm.modalData.productDto.repaymentList[0].paymentEndDate | lolaDateFormatter )||'-'}}</span>
+                                <!--<span class="col-xs-12">{{(vm.repaymentSchedule.maturingDate||'-') | }}</span> -->
+                            </div>
+                            <div class="col-xs-3 text-right">
+                                <span class="col-xs-12">Repayment Amount</span>
+                                <span class="col-xs-12">{{(vm.calculateRepayment() | customCurrencyWithDecimal )|| '-'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="title">Redraw Required?</div>
+                    <div class="col-xs-12 no-horizontal-padding">
+                        <span class='radio'>
+						<input type="radio" name="redraw" id="redraw_yes" ng-model="vm.modalData.productDto.fulfillmentDTO.redrawRequired" value=1 ng-change='vm.makeFormDirty()'> 
+						<span class="bigger-inner-circle">&nbsp;</span>
+                        </span>
+                        <label class="custom-radio" for="redraw_yes">
+                            Yes
+                        </label>
+                        <span class='radio'>
+						<input type="radio" name="redraw" id="redraw_no" class="redrawNo" ng-model="vm.modalData.productDto.fulfillmentDTO.redrawRequired" value=0 ng-change='vm.makeFormDirty()'> 
+						<span class="bigger-inner-circle">&nbsp;</span>
+                        </span>
+                        <label class="custom-radio" for="redraw_no">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <!-- <div class="col-xs-12">
+				<div class="title">Comments</div>
+				<div class="col-xs-12 no-horizontal-padding">
+					<textarea maxlength="5000" ng-model="vm.comments"></textarea>
+					{{5000-vm.comments.length}} chars remaining
+				</div>
+			</div> -->
+                <div class=col-xs-12>
+                    <div class="title">Supporting Document</div>
+                    <div class="col-xs-12 content">
+                        <div class="col-xs-12">
+                            <div class="col-xs-12 support-docs">
+                                <!-- <input type="checkbox" ng-disabled="vm.isOpenModalInViewMode" ng-model="vm.modalData.supportingDocImaged" class="supportDocCheck"  ng-change='vm.makeFormDirty()'/><span class="checkbox" ng-click="vm.checkSupportDoc()">I confirm consent and variation form document has been imaged under:</span> -->
+                               <div class="col-xs-1 no-padding custom-checkbox link" ng-class="{'custom-checkbox-selected': vm.modalData.supportingDocImaged , 'custom-checkbox-disabled':vm.isOpenModalInViewMode}" ng-click="!vm.isOpenModalInViewMode?vm.checkSupportDoc():'';vm.makeFormDirty()"></div> 
+                               <span>I confirm consent and variation form document has been imaged under:</span>
+							   </div>
+                                                    
+                           
+                            
+                            <div class="col-xs-6 MFcustomSelect">
+                                <select class="form-control input-lg no-border customSelect" ng-options="customer.customerId as customer.customerName for customer in vm.customerDetailsList | orderBy:'customerId'" ng-model="vm.selectedCustomerId" ng-change='vm.makeFormDirty()'>
+                                    <option selected value="">Select a Customer...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-12 footer-btn">
+                        <button type="button" class="btn btn-primary text-center" ng-click="vm.saveAndRunDecision()" ng-disabled="!vm.isValidForm() || isDecissionTaken">Decision</button> 
+                        <button type="button" class="btn btn-primary text-center" ng-click="vm.onContinueButtonClick()" ng-if="vm.shouldEnableContinueButton(vm.decision)">{{vm.getContinueButtonLabel()}}</button>
+                    </div>
+                    </br>
+                    <div class="col-xs-12">
+                        <a class="lola-link" href="" ng-click="vm.close()" target="_blank">Cancel</a>
+                    </div>
+                </div>
+            </div>
+    </fieldset>
+</form>

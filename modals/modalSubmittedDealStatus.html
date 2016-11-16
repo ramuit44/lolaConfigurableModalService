@@ -1,0 +1,74 @@
+<div >
+	<div class="modal-header">
+		<button type="button" class="close"  ng-click="close()">
+			<span aria-hidden="true" class="glyphicon glyphicon-remove"></span><span class="sr-only">Close</span>
+		</button>
+		<h3 class="modal-title" id="myModalLabel">{{heading}}</h3>
+	</div>
+						
+	<div class="modal-body modal-body-popup">
+		<p class="text-heading">Deal: {{dealStatus.lolaDealId}} (Connection: {{customerGroupName}})</p>
+		<div ng-show="sourceGroupNoDeleted"><i class="glyphicon glyphicon-exclamation-sign icon_purple"></i>&nbsp;<b class="icon_purple">The connection has been deleted from WOS</b></div>
+		<div>&nbsp;</div>
+		<table class='col-xs-12 row'>
+			<thead>
+				<tr>
+					<th class='col-sm-2 text-heading icon_purple text-bold'>TLA DEAL ID</th>
+					<th class='col-sm-2 text-heading icon_purple text-bold'>TLA STATUS</th>
+				</tr>
+			</thead>
+			<tBody>
+				<tr>
+					<td class='col-sm-2'><span ng-show="dealStatus.tlaDealId!='null'">{{dealStatus.tlaDealId}}</span></td>
+					<td class='col-sm-2'>{{dealStatus.tlaDealStatus}}</td>
+				</tr>
+			</tBody>
+		</table>
+		<p><br><br><br></p>
+		<table ng-hide="isDataNotAvailable()" class="table table-home-page table-hover">
+			<thead>
+				<tr>
+					<th></th>
+					<th class='col-sm-2'>Error Code</th>
+					<th class='col-sm-10'>Error</th>
+				</tr>
+			</thead>
+			<tbody ng-model="tlaDetailError">
+				<tr>
+					<td><i ng-click="expand(dealStatus,$event)"	ng-show="dealStatus.tlaValidationErrorList.length>0" ng-class="{true:'glyphicon glyphicon-menu-up link', false:'glyphicon glyphicon-menu-down link'}[dealStatus.isExpanded]"></i>
+					</td>
+					<td class='col-sm-2'>{{dealStatus.tlaErrorCode}}</td>
+					<td class='col-sm-10' ng-bind-html="dealStatus.tlaErrorMessage | parseUrl"></td>										
+				</tr>
+				<tr ng-if="dealStatus.tlaValidationErrorList.length>0"	ng-show="dealStatus.isExpanded">
+					<td colspan="6">
+						<div>
+							<table class="table hidden-table table-hover">
+								<tr>
+									<th class='col-sm-2'>Type</th>
+									<th class='col-sm-8'>Detailed Error</th>
+									<th class='col-sm-1'></th>
+								</tr>
+								<tr ng-model="validationError" ng-repeat="error in dealStatus.tlaValidationErrorList | orderBy:'errorCode'">
+									<td class='col-sm-2'>{{error.errorType}}</td>
+									<td class='col-sm-8'>{{error.description}}</td>
+									<td class='col-sm-1'></td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<div class='col-xs-12' align="left">
+			<a href="http://cms.intranet.westpac.com.au/content/CORP/MACMultiBr.nsf/Pages/LOLAErrors" target="_blank">Click here for more information on TLA status and errors</a>
+		</div>
+		
+		<div class='col-xs-12 pull-right'>
+			<button type="button" ng-show='enableRetry' restrict='' viewAccess='ViewRetryButton' editAccess='ViewRetryButton'  class="btn btn-primary" ng-Click='updateDealStatusOnRetry(dealStatus.lolaDealId,errorList,dealsourceGroupNo)'>RETRY</button>
+			<button type="button" class="btn btn-primary" ng-click="ok()">OK</button>
+		</div>
+	</div>
+</div>

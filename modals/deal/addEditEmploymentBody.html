@@ -1,0 +1,142 @@
+<form name="employmentDetailsFrm" >
+    <div class="form-group">
+        <div class="col-sm-12 row">            
+            <div class="col-sm-12" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">
+                <label>EMPLOYMENT TYPE</label>
+            </div>
+            <div class="col-sm-12" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">                     
+                <select class="form-control input-lg no-border"  ng-model="vm.parentScope.employmentTypeId"
+                ng-options="employmentType.key as employmentType.name for employmentType in vm.parentScope.employmentTypeReferenceData | orderBy:'key'" >                                           
+                </select>
+            </div>
+        </div>                          
+        <div class="col-sm-12 row">&nbsp;</div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-12">
+                <label>DATE COMMENCED PROFESSION/INDUSTRY</label>
+            </div>                          
+            <div class="col-sm-12" ng-init = "vm.parentScope.isStartDateInProfessionValid =true">
+                <div class="col-sm-12 input-group input-group-lg" ng-init ="vm.parentScope.startDateInProfession = (vm.parentScope.startDateInProfession | date:'dd/MM/yyyy')">
+                    <span class="input-group-addon no-border"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control no-border" ng-model="vm.parentScope.startDateInProfession" ng-blur="vm.parentScope.isStartDateInProfessionValid = vm.parentScope.validateDate(vm.parentScope.startDateInProfession); vm.parentScope.isDateValid2 = vm.parentScope.isVeryOldDate(vm.parentScope.startDateInProfession);"  
+                    placeholder="DD/MM/YYYY"   maxlength=10 ng-disabled="isnotVerifiedConditionDateCommenced">
+                </div>
+                <span ng-show="!vm.parentScope.isStartDateInProfessionValid" class="has-error">Enter a Date in the format of DD/MM/YYYY</span>
+                <span ng-show="vm.parentScope.isStartDateInProfessionValid  && !vm.parentScope.isnotFutureDate(vm.parentScope.startDateInProfession)" class="has-error">Enter a date prior to or equal to today</span>
+                <span ng-show="vm.parentScope.isStartDateInProfessionValid && vm.parentScope.isVeryOldDate(vm.parentScope.startDateInProfession)" class="has-error">Enter Valid Date</span>
+            </div>
+        </div>                                              
+        <div class="col-sm-12 row">&nbsp;</div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-12">
+                <label for="">EMPLOYED IN THE FAMILY BUSINESS?</label>
+            </div>                      
+            <div class="col-sm-12">
+                <label class="custom-radio">
+                    <span class="radio">
+                        <input type="radio" name="isEmployedInFamilyBusiness" ng-value="1" ng-model='vm.parentScope.isEmployedInFamilyBusiness' >
+                        <span>&nbsp;</span>
+                    </span>
+                Yes</label>
+                
+                <label class="custom-radio">
+                    <span class="radio">
+                        <input type="radio" name="isEmployedInFamilyBusiness" ng-value="0" ng-model='vm.parentScope.isEmployedInFamilyBusiness' >
+                        <span>&nbsp;</span>
+                    </span>
+                No</label>
+                
+            </div>                      
+        </div>
+        <div class="col-sm-12 row" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">&nbsp;</div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-12" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">
+                <label for="employer">EMPLOYER</label>
+            </div>
+            <div class="col-sm-12" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">
+                <input  ng-model="vm.parentScope.employerName" name="employer" type="text"
+                    class="form-control input-lg no-border" placeholder="Enter employer" ng-maxlength="100"  >                  
+                <span ng-show="employmentDetailsFrm.employer.$error.maxlength" class="has-error">You have exceed the maximum length of 100 characters</span>
+            </div>
+        </div>
+        <div class="col-sm-12 row" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">&nbsp;</div>
+        <div class="col-sm-12 row">
+            <div class="col-sm-12" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">
+                <label >CONTACT NAME OF EMPLOYER</label>
+            </div>
+            <div class="col-sm-12" ng-show="vm.parentScope.isEmployedInFamilyBusiness==0">
+                <input  ng-model="vm.parentScope.contactPerson" name="employerContactName" type="text"
+                        class="form-control input-lg no-border" placeholder="Enter contact name of employer" ng-maxlength="100" >
+                <span ng-show="vm.parentScope.employmentDetailsFrm.employerContactName.$error.maxlength" class="has-error">You have exceed the maximum length of 100 characters</span>
+            </div>
+                                    
+        </div>
+        <div class="col-sm-12 row">&nbsp;</div> 
+        <div class="col-sm-12 row">
+            <div class="col-sm-12">
+                <label class="employerContactNumber">EMPLOYER CONTACT NUMBER</label>
+            </div>              
+            <div class="col-sm-12" ng-init= "vm.parentScope.isContactNumberCorrect = false;">
+                <input  ng-model="vm.parentScope.employerPhoneNumber" name="employerContactNumber" type="text" ng-blur="vm.parentScope.isContactNumberCorrect=!vm.parentScope.validatePhoneNumber(vm.parentScope.employerPhoneNumber)"
+                        class="form-control input-lg no-border" placeholder="Enter employer contact number" >
+                <span ng-show="vm.parentScope.isContactNumberCorrect" class="has-error">Enter a valid phone number.</span>
+            </div>
+        </div>              
+        <div class="col-sm-12 row">&nbsp;</div>
+            
+        <div class="col-sm-12 row" ng-show="vm.parentScope.employmentDetails=='current'">  
+            <div class="col-sm-12">
+                <label for="">DATE COMMENCED IN JOB</label>
+            </div>                      
+            
+            <div class="col-sm-12" ng-init="vm.parentScope.isCommenceDateInJob = true">
+                <div class="input-group input-group-lg" ng-init ="vm.parentScope.startDate = (vm.parentScope.startDate | date:'dd/MM/yyyy')">
+                    <span class="input-group-addon no-border"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control no-border" ng-model="vm.parentScope.startDate" name="dateField" ng-blur="vm.parentScope.isCommenceDateInJob = vm.parentScope.validateDate(vm.parentScope.startDate); isOldDate   =   vm.parentScope.isVeryOldDate(vm.parentScope.startDate)"
+                    placeholder="DD/MM/YYYY"  maxlength=10 >
+                </div>                                                                              
+                <span ng-show="!vm.parentScope.isCommenceDateInJob" class="has-error">Enter a Date in the format of DD/MM/YYYY</span>
+                <span ng-show="vm.parentScope.isCommenceDateInJob  && !vm.parentScope.isnotFutureDate(vm.parentScope.startDate)" class="has-error">Enter a date prior to or equal to today</span>
+                <span ng-show="vm.parentScope.isCommenceDateInJob  && vm.parentScope.isVeryOldDate(vm.parentScope.startDate)" class="has-error">Enter Valid Date</span>
+                <div class="col-sm-12 text-right" ng-show="vm.parentScope.startDate!=null && vm.parentScope.startDate!='' && vm.parentScope.validateDate(vm.parentScope.startDate) && vm.parentScope.isnotFutureDate(vm.parentScope.startDate)">
+                    <p class="year-string">{{vm.parentScope.calculateYears(vm.parentScope.startDate,"")}}</p>
+                </div>                              
+            </div>                                                      
+        </div>
+        <div class="col-sm-12 row" ng-show="vm.parentScope.employmentDetails=='previous'" >
+            <div class="col-sm-7">
+                <label for="">DATE COMMENCED IN JOB</label>
+            </div>
+            <div class="col-sm-5">
+                <label for="">END DATE</label>
+            </div>                                          
+        </div>  
+        <div class="col-sm-12 row" ng-show="vm.parentScope.employmentDetails=='previous'"ng-init="vm.parentScope.isCommenceDateInPreviousJob = true">                         
+            <div class="col-sm-6">
+                <div class="input-group input-group-lg" ng-init ="vm.parentScope.startDate = (vm.parentScope.startDate | date:'dd/MM/yyyy')">
+                    <span class="input-group-addon no-border"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control no-border" ng-model="vm.parentScope.startDate" ng-blur="vm.parentScope.isCommenceDateInPreviousJob = vm.parentScope.validateDate(vm.parentScope.startDate)" 
+                    placeholder="DD/MM/YYYY"   maxlength=10 >
+                </div>
+                <span ng-show="!vm.parentScope.isCommenceDateInPreviousJob" class="has-error">Enter a Date in the format of DD/MM/YYYY</span>
+                <span ng-show="vm.parentScope.isCommenceDateInPreviousJob && !vm.parentScope.isnotFutureDate(vm.parentScope.startDate)" class="has-error">Enter a date prior to or equal to today</span>
+             
+            </div>
+            <div class="col-sm-6" ng-init="vm.parentScope.isEndDateInPreviousJob = true">
+                <div class="input-group input-group-lg" ng-init ="vm.parentScope.endDate = (vm.parentScope.endDate | date:'dd/MM/yyyy')">
+                    <span class="input-group-addon no-border"><i class="glyphicon glyphicon-calendar"></i></span>
+                    <input type="text" class="form-control no-border" ng-model="vm.parentScope.endDate"  ng-blur="vm.parentScope.isEndDateInPreviousJob = vm.parentScope.validateDate(vm.parentScope.endDate)"
+                    placeholder="DD/MM/YYYY"   maxlength=10 >
+                </div> 
+                <span ng-show="!vm.parentScope.isEndDateInPreviousJob" class="has-error">Enter a Date in the format of DD/MM/YYYY</span>
+                <span ng-show="vm.parentScope.isEndDateInPreviousJob && !vm.parentScope.isnotFutureDate(vm.parentScope.endDate)" class="has-error">Enter a date prior to or equal to today</span>
+                <span ng-show="vm.parentScope.isEndDateInPreviousJob && vm.parentScope.isnotFutureDate(vm.parentScope.endDate) && !vm.parentScope.validateStartDateEndDateValues(vm.parentScope.startDate,vm.parentScope.endDate) " class="has-error">Enter a date greater than or equal to Date Commenced in job.</span>
+                <div class="text-right" ng-show="vm.parentScope.startDate!=null && vm.parentScope.startDate!='' && vm.parentScope.isnotFutureDate(vm.parentScope.startDate) && vm.parentScope.validateDate(vm.parentScope.startDate) && vm.parentScope.isnotFutureDate(vm.parentScope.endDate) && vm.parentScope.endDate!=null && vm.parentScope.endDate!='' &&  vm.parentScope.validateDate(vm.parentScope.endDate) && vm.parentScope.validateStartDateEndDateValues(vm.parentScope.startDate,vm.parentScope.endDate)">
+                    <p class="year-string">{{vm.parentScope.calculateYears(vm.parentScope.endDate, vm.parentScope.startDate)}}</p>
+                </div>
+            </div>                          
+        </div>                          
+        
+    </div>   
+</form>
+    
